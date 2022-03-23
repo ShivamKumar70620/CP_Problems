@@ -1,0 +1,18 @@
+class Solution {
+  public:
+    // Function to return the diameter of a Binary Tree.
+    int s = INT_MIN;
+    int sum(Node* root){
+        if(root==NULL)
+            return 0;
+        int l = sum(root->left);
+        int r = sum(root->right);
+        int temp = max(l,r)+1;
+        s = max(s,l+r+1);
+        return temp;
+    }
+    int diameter(Node* root) {
+        sum(root);
+        return s;
+    }
+};
