@@ -1,0 +1,10 @@
+bool isCircular(struct Node *head){
+    struct Node* curr = head->next;
+    while(1){
+        if(head==curr)
+            return 1;
+        if(curr==NULL)
+            return 0;
+        curr = curr->next;
+    }
+}
