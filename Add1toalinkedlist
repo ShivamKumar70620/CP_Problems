@@ -1,0 +1,40 @@
+class Solution
+{
+    public:
+    Node * rev(Node * head){
+        struct Node *curr,*nx,*prev;
+        curr = head;
+        nx = NULL;
+        prev=NULL;
+        while(curr!=NULL){
+            nx = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nx;
+            
+        }
+        head = prev;
+        return head;
+    }
+    Node* addOne(Node *head) 
+    {
+        Node *temp = rev(head);
+        Node* res = temp;
+        int c = 1;
+        while(temp){
+            int x = temp->data+c;
+            temp->data = x%10;
+            c = x/10;
+            if(temp->next==NULL && c>0)
+            {
+                temp->data = c*10;
+                break;
+            }
+            temp = temp->next;
+            
+        }
+        temp = rev(res);
+        return temp;
+        // return head of list after adding one
+    }
+};
