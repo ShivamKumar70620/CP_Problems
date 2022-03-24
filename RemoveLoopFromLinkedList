@@ -1,0 +1,33 @@
+class Solution
+{
+    public:
+    Node* containLoop(Node* head){
+        Node* slow = head,*fast = head;
+        while(slow && fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow==fast)
+                return slow;
+        }
+        return NULL;
+    }
+    //Function to remove a loop in the linked list.
+    void removeLoop(Node* head)
+    {
+        Node* loop = containLoop(head);
+        if(loop!=NULL){
+            Node* curr = head;
+            while(curr!=loop){
+                curr = curr->next;
+                loop = loop->next;
+            }
+            while(1){
+                if(curr->next==loop){
+                    curr->next = NULL;
+                    return;
+                }
+                curr = curr->next;
+            }
+        }
+    }
+};
