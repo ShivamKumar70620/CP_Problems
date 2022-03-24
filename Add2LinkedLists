@@ -1,0 +1,71 @@
+class Solution
+{
+    public:
+    //Function to add two numbers represented by linked list.
+    struct Node *rev(struct Node* head){
+        struct Node* current = head;
+        struct Node *prev = NULL, *next = NULL;
+  
+        while (current != NULL) {
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+        head = prev;
+        return head;
+    }
+    void print(struct Node* node){
+        while(node!=NULL){
+            cout<<node->data<<" ";
+            node = node->next;
+        }
+        cout<<endl;
+    }
+    struct Node* addTwoLists(struct Node* first, struct Node* second)
+    {
+        struct Node* f = rev(first);
+        struct Node* s = rev(second);
+        int c = 0;
+        struct Node *res = new Node(0);
+        res->next = NULL;
+        struct Node *ans = res;
+        while(1){
+            
+                
+            int x = 0;
+            if(f!=NULL)
+                x = f->data;
+            int y = 0;
+            if(s!=NULL)
+                y = s->data;
+            int num = (x+y+c)%10;
+            c = (c+y+x)/10;
+            res->data = num;
+            
+            if(f!=NULL)
+                f = f->next;
+            if(s!=NULL)
+                s = s->next;
+            if(s==NULL && f==NULL){
+                if(c>0){
+                    struct Node* temp = new Node(0);
+                    temp->next = NULL;
+                    res->next = temp;
+                    res = res->next;
+                    res->data = c;
+                    res->next = NULL;
+                }
+                break;
+            }
+            struct Node* temp = new Node(0);
+            temp->next = NULL;
+            res->next = temp;
+            res = res->next;
+            
+        }
+        struct Node* r = rev(ans);
+        return r;
+        
+    }
+};
