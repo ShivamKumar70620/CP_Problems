@@ -1,0 +1,40 @@
+class Solution{
+  public:
+    //Function to check whether the list is palindrome.
+    Node* middle(Node* head){
+        Node* slow = head,*fast = head;
+        while(slow && fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+    bool isPalindrome(Node *head)
+    {
+        Node* mid = middle(head);
+        Node* ptr = head;
+        int n = 0;
+        while(ptr){
+            ptr = ptr->next;
+            n+=1;
+        }
+        Node* prev = mid,*curr = head,*next = head;
+        while(curr!=mid){
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        
+        Node* curr1 = prev,*curr2 = mid;
+        if(n%2!=0)
+            curr2 = curr2->next;
+        while(curr2){
+            if(curr2->data!=curr1->data)
+                return 0;
+            curr1 = curr1->next;
+            curr2 = curr2->next;
+        }
+        return 1;
+    }
+};
