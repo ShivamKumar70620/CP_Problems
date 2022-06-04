@@ -1,0 +1,77 @@
+ref:-
+https://leetcode.com/problems/letter-combinations-of-a-phone-number/submissions/
+https://practice.geeksforgeeks.org/problems/possible-words-from-phone-digits-1587115620/1
+
+code:-
+
+class Solution {
+public:
+    void solve(int i,vector<string> &ans,string digits,int n,string temp){
+        if(i>=n || temp.size()==n)
+        {
+            ans.push_back(temp);
+            return ;
+        }
+        if(digits[i]=='2')
+        {
+            solve(i+1,ans,digits,n,temp+'a');
+            solve(i+1,ans,digits,n,temp+'b');
+            solve(i+1,ans,digits,n,temp+'c');
+        }
+        else if(digits[i]=='3')
+        {
+            solve(i+1,ans,digits,n,temp+'d');
+            solve(i+1,ans,digits,n,temp+'e');
+            solve(i+1,ans,digits,n,temp+'f');
+        }
+        else if(digits[i]=='4')
+        {
+            solve(i+1,ans,digits,n,temp+'g');
+            solve(i+1,ans,digits,n,temp+'h');
+            solve(i+1,ans,digits,n,temp+'i');
+        }
+        else if(digits[i]=='5')
+        {
+            solve(i+1,ans,digits,n,temp+'j');
+            solve(i+1,ans,digits,n,temp+'k');
+            solve(i+1,ans,digits,n,temp+'l');
+        }
+        else if(digits[i]=='6')
+        {
+            solve(i+1,ans,digits,n,temp+'m');
+            solve(i+1,ans,digits,n,temp+'n');
+            solve(i+1,ans,digits,n,temp+'o');
+        }
+        if(digits[i]=='7')
+        {
+            solve(i+1,ans,digits,n,temp+'p');
+            solve(i+1,ans,digits,n,temp+'q');
+            solve(i+1,ans,digits,n,temp+'r');
+            solve(i+1,ans,digits,n,temp+'s');
+        }
+        if(digits[i]=='8')
+        {
+            solve(i+1,ans,digits,n,temp+'t');
+            solve(i+1,ans,digits,n,temp+'u');
+            solve(i+1,ans,digits,n,temp+'v');
+        }
+        else if(digits[i]=='9')
+        {
+            solve(i+1,ans,digits,n,temp+'w');
+            solve(i+1,ans,digits,n,temp+'x');
+            solve(i+1,ans,digits,n,temp+'y');
+            solve(i+1,ans,digits,n,temp+'z');
+        }
+            
+    }
+    vector<string> letterCombinations(string digits) {
+        vector<string> ans;
+        int n = digits.size();
+        if(n>=1)
+            solve(0,ans,digits,n,"");
+        return ans;
+    }
+};
+
+T.C = 4^(n)
+S.C. = n
