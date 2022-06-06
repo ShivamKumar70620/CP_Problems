@@ -1,0 +1,30 @@
+Ref:-
+https://leetcode.com/problems/permutations/submissions/
+https://practice.geeksforgeeks.org/problems/permutations-of-a-given-string2041/1
+
+code:-
+class Solution {
+public:
+    void solve(int i,vector<int>&nums,set<vector<int>>&ans,vector<int>&temp,int n){
+        if(i==n)
+        {
+            ans.insert(nums);
+            return;
+        }
+        for(int j=0;j<n;j++){
+            swap(nums[i],nums[j]);
+            solve(i+1,nums,ans,temp,n);
+            swap(nums[i],nums[j]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        int n = nums.size();
+        set<vector<int>> ans;
+        vector<int> temp;
+        solve(0,nums,ans,temp,n);
+        vector<vector<int>> res;
+        for(auto i:ans)
+            res.push_back(i);
+        return res;
+    }
+};
