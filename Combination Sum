@@ -1,0 +1,33 @@
+ref:-
+https://leetcode.com/problems/combination-sum/submissions/
+https://practice.geeksforgeeks.org/problems/combination-sum-1587115620/1
+
+code:-
+class Solution {
+public:
+    void solve(int i,vector<vector<int>> &ans,vector<int> cand,vector<int> &temp,int target,int n){
+        if(i>=n || target<0)
+            return;
+        if(target==0){
+            ans.push_back(temp);
+            return;
+        }
+        if(cand[i]<=target){
+            temp.push_back(cand[i]);
+            solve(i,ans,cand,temp,target-cand[i],n);
+            temp.pop_back();
+        }
+        solve(i+1,ans,cand,temp,target,n);
+        
+        
+    }
+    vector<vector<int>> combinationSum(vector<int>& cand, int target) {
+        vector<vector<int>> ans;
+        vector<int> temp;
+        int n = cand.size();
+        solve(0,ans,cand,temp,target,n);
+        return ans;
+    }
+};
+
+T.C. = 2^(n)
