@@ -1,0 +1,38 @@
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        vector<int> ans;
+        int i=0,j=0;
+        if(n>=1)
+            {while(1){
+                if(i==m && j==n)
+                    break;
+                if(j==n)
+                {
+                    nums2.push_back(INT_MAX);
+                    
+                }
+                if(nums1[i]<=nums2[j])
+                {
+                    if(i<m){
+                        ans.push_back(nums1[i]);
+                        i++;
+                    }
+                    else
+                        nums1[i] = INT_MAX;
+                }
+                else
+                {
+                    if(j<n){
+                        ans.push_back(nums2[j]);
+                        j++;   
+                    }
+                }
+
+            }
+            nums1 = ans;}
+    }
+};
+
+
+https://leetcode.com/problems/merge-sorted-array/submissions/
