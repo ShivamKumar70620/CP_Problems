@@ -2,6 +2,34 @@ ref:-
 https://leetcode.com/problems/subsets/submissions/
 
 code:-
+[1]
+class Solution {
+public:
+    
+    void solve(int i,vector<int> &nums,vector<vector<int>> &ans,vector<int>&temp){
+        if(i==nums.size()){
+            ans.push_back(temp);
+            return;
+        }
+        solve(i+1,nums,ans,temp);
+        temp.push_back(nums[i]);
+        solve(i+1,nums,ans,temp);
+        temp.pop_back();
+        
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> temp;
+        solve(0,nums,ans,temp);
+        // vector<vector<int>> res;
+        // for(auto i:ans)
+        //     res.push_back(i);
+        return ans;
+    }
+};
+
+
+[2]
 class Solution {
 public:
     void solve(int i,vector<int> &nums,set<vector<int>> &ans,vector<int>&temp){
