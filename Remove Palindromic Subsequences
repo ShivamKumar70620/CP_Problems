@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int palind(string s){
+        string temp = s;
+        string t = temp;
+        reverse(t.begin(),t.end());
+        if(t==temp){
+            return 1;
+        }
+        return 0;
+    }
+    int removePalindromeSub(string s) {
+        if(s.size()==0)
+            return 0;
+        else if(palind(s))
+            return 1;
+        return 2;
+    }
+};
+
+
+T.C. = n;
+
+ref:-
+https://leetcode.com/problems/remove-palindromic-subsequences/
