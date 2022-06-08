@@ -1,0 +1,30 @@
+ref:-
+https://leetcode.com/problems/letter-tile-possibilities/submissi
+
+Code:-
+class Solution {
+public:
+    void solve(string tiles,set<string>&ans,string temp,int n,vector<bool> &flag){
+        
+        for(int j=0;j<n;j++){
+            if(flag[j]!=1){
+                // string t = temp;
+                temp.push_back(tiles[j]);
+                flag[j] = 1;
+                ans.insert(temp);
+                solve(tiles,ans,temp,n,flag);
+                temp.pop_back();//string can also work as vector
+                flag[j] = 0 ;
+            }
+        }
+        
+        
+    }
+    int numTilePossibilities(string tiles) {
+        set<string> ans;
+        vector<bool> flag(tiles.size(),0);
+        solve(tiles,ans,"",tiles.size(),flag);
+        return ans.size();
+    }
+};
+
