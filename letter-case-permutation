@@ -1,0 +1,34 @@
+ref:-
+https://leetcode.com/problems/letter-case-permutation/
+Code:
+class Solution {
+public:
+    void solve(int i,string s,vector<string> &ans,string temp,int n){
+        cout<<s<<" "<<i<<endl;
+        if(i==n){
+            ans.push_back(s);
+            return;
+        }
+        if(i>=n)
+            return ;
+        if((s[i]>='a' && s[i]<='z') || (s[i]>='A' && s[i]<='Z')){
+            char y = s[i];
+            char x;
+            if(isupper(s[i]))
+                x = tolower(s[i]);
+            else
+                x = toupper(s[i]);
+            s[i] = x;
+            solve(i+1,s,ans,temp,n);
+            s[i] = y;
+            solve(i+1,s,ans,temp,n);
+        }
+        else
+            solve(i+1,s,ans,temp,n);
+    }
+    vector<string> letterCasePermutation(string s) {
+        vector<string> ans;
+        solve(0,s,ans,"",s.size());
+        return ans;
+    }
+};
