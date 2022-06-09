@@ -1,0 +1,32 @@
+ref:-
+https://leetcode.com/problems/all-paths-from-source-to-target/
+
+code:
+class Solution {
+public:
+    void dfs(int i,vector<vector<int>>& graph,vector<vector<int>>& ans,vector<int> temp,vector<bool> &vis,int n){
+        if(i==n-1)
+        {
+            temp.push_back(n-1);
+            ans.push_back(temp);
+            return;
+        }
+        vis[i] = true;
+        temp.push_back(i);
+        for(auto j:graph[i]){
+            dfs(j,graph,ans,temp,vis,n);
+        }
+        vis[i] = 0;
+        
+    }
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        int n = graph.size();
+        vector<vector<int>> ans;
+        vector<bool> vis(n,false);
+        vector<int> temp;
+        int target;
+        dfs(0,graph,ans,temp,vis,n);
+        
+        return ans;
+    }
+};
