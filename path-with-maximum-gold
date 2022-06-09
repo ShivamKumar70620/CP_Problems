@@ -1,0 +1,37 @@
+https://leetcode.com/problems/path-with-maximum-gold/submissions/
+
+code:-
+class Solution {
+public:
+    int solve(int i,int j,vector<vector<int>>& grid,int n,int m){
+        //cout<<grid[i][j]<<endl;
+        if(i<0|| j<0 || i>=n || j>=m || grid[i][j]==0)
+            return 0;
+        
+        int x = grid[i][j];
+        int cost = grid[i][j];
+        grid[i][j] = 0;
+        int a = solve(i-1,j,grid,n,m);
+        int b = solve(i,j-1,grid,n,m);
+        int c = solve(i+1,j,grid,n,m);
+        int d = solve(i,j+1,grid,n,m);
+        cost+= max(max(max(a,b),c),d);
+        grid[i][j] = x;
+        return cost;
+        
+    }
+    int getMaximumGold(vector<vector<int>>& grid) {
+        int n = grid.size(),m = grid[0].size();
+        // vector<vector<bool>> vis(n,vector<bool>(m,false));
+        int x = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]>0){
+                    x = max(x,solve(i,j,grid,n,m));
+                }
+            }
+        }
+        return x;
+        
+    }
+};
