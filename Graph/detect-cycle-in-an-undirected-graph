@@ -1,0 +1,49 @@
+https://practice.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1#
+
+
+code:-
+
+class Solution {
+  public:
+    // Function to detect cycle in an undirected graph.
+    bool bfs(vector<int> adj[],queue<int> &q,unordered_map<int,int> parent,vector<int> &vis){
+        if(q.empty())
+            return 0;
+        int x = q.front();
+        q.pop();
+        // cout<<"parent"<<x<<endl;
+        for(auto i:adj[x]){
+            // cout<<i<<endl;
+            if(!vis[i]){
+                vis[i] = 1;
+                q.push(i);
+                parent[i] = x;
+            }
+            else{
+                if(parent[x]!=i)
+                    return 1;
+            }
+            
+            
+        }
+        return bfs(adj,q,parent,vis);
+        
+    }
+    bool isCycle(int V, vector<int> adj[]) {
+        unordered_map<int,int> parent;
+        vector<int> vis(V,0);
+        queue<int> q;
+        for(int i=0;i<V;i++)
+            if(!vis[i])
+            {
+                vis[i] = 1;
+                q.push(i);
+                bool ans = bfs(adj,q,parent,vis);
+                // cout<<ans<<endl;
+                if(ans==1)
+                    return 1;
+            }
+            
+        return 0;
+    }
+};
