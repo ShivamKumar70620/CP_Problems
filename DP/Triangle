@@ -1,0 +1,39 @@
+https://leetcode.com/problems/triangle/submissions/
+
+Code:-
+
+1:-
+This solution will give TLE;
+class Solution {
+public:
+    int solve(int i,int j,vector<vector<int>>& triangle,int sum,int n){
+        if(i>=n)
+            return sum;
+        if()
+        return min(solve(i+1,j,triangle,sum+triangle[i][j],n),solve(i+1,j+1,triangle,sum+triangle[i][j+1],n));
+    }
+    int minimumTotal(vector<vector<int>>& triangle) {
+        return solve(1,0,triangle,triangle[0][0],triangle.size());
+        
+    }
+};
+
+2:-
+class Solution {
+public:
+
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int dp[triangle.size()+1];
+        fill(dp,dp+triangle.size()+1,0);
+        reverse(triangle.begin(),triangle.end());
+        for(auto row:triangle){
+            for(int i=0;i<row.size();i++){
+                dp[i] = row[i]+min(dp[i],dp[i+1]);
+            }
+        }
+        return dp[0];
+        
+    }
+};
+T.C:= rows*no.of elements;
+S.C. = rows;
