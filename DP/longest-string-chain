@@ -1,0 +1,45 @@
+https://leetcode.com/problems/longest-string-chain/submissions/
+
+
+code:-
+class Solution {
+public:
+    vector<int> score;//to store the maximum edges connected
+    vector<vector<int>> edge;//to make a graph that connects the strings with one char diff\
+    //finds the maximum edges connected to a vertex
+    int longest(int v){
+        if(score[v]>0)
+            return score[v];
+        score[v] = 1;
+        for(auto i:edge[v]){
+            score[v] = max(score[v],longest(i)+1);
+        }
+        return score[v];
+    }
+    
+    int longestStrChain(vector<string>& words) {
+        int n = words.size();
+        edge.clear();
+        edge.resize(n);
+        score.clear();
+        score.resize(n);
+        unordered_map<string,int> mp;
+        for(int i=0;i<words.size();i++)
+            mp[words[i]] = i;
+        vector<int> chars(26,0);
+        for(int i = 0;i<words.size();i++){
+            for(int j = 0;j<words[i].size();j++){
+                string temp = words[i].substr(0,j)+words[i].substr(j+1);
+                if(mp.find(temp)==mp.end())
+                    continue;
+                edge[mp[temp]].push_back(i);
+            }
+        }
+        int ans = 0;
+        for(int i=0;i<words.size();i++){
+            ans = max(ans,longest(i));
+        }
+        return ans;
+    }
+    
+};
