@@ -1,0 +1,34 @@
+https://leetcode.com/problems/count-substrings-that-differ-by-one-character/
+
+code:
+class Solution {
+public:
+    int countSubstrings(string s, string t) {
+        int i=0,j=0,d=0,ans=0,p,q;   
+        for(int i=0;i<s.size();i++){
+            for(int j=0;j<t.size();j++){
+                p = i,q = j;
+                d = 0;
+                // cout<<ans<<endl;
+                while(d<2)
+                {
+                    if(p>=s.size() || q>=t.size())
+                        break;
+                    // cout<<s[p]<<" "<<t[q]<<endl;
+                    if(s[p]!=t[q]){
+                        d+=1;
+                    }
+                    if(d==1)
+                        ans++;
+                    p+=1;
+                    q+=1;
+
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+
+T.C. = n^3
