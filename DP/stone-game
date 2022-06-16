@@ -1,0 +1,88 @@
+https://leetcode.com/problems/stone-game/
+
+
+code:-
+
+[1]:- recursive solution failed some testcases
+class Solution {
+public:
+    bool solve(int i,int j,vector<int>& piles,int sum1,int sum2,int flag){
+        // cout<<i<<" "<<j<<endl;
+        if(i+1>j){
+            if(flag==0){
+                if(sum1+piles[i]>sum2)
+                    return 1;
+                else
+                    return 0;
+            }
+            else{
+                if(sum1>piles[i]+sum2)
+                    return 1;
+                else
+                    return 0;
+            }
+        }
+        if(i>j && sum1>sum2)
+            return 1;
+        if(i>j)
+            return 0;
+        
+            
+        if(flag==0)
+            return solve(i+1,j,piles,sum1+piles[i],sum2,1) || solve(i,j-1,piles,sum1+piles[j],sum2,1);
+        else
+            return solve(i+1,j,piles,sum1,sum2+piles[i],0) || solve(i,j-1,piles,sum1,sum2+piles[j],0);
+    }
+    bool stoneGame(vector<int>& piles) {
+        return solve(0,piles.size()-1,piles,0,0,0);
+    }
+};
+
+
+[2]:-dp solution passed all testcases
+
+class Solution {
+public:
+    bool solve(int i,int j,vector<int>& piles,int sum1,int sum2,int flag,vector<vector<int>> &dp){
+        // cout<<i<<" "<<j<<endl;
+        if(i+1>j){
+            if(flag==0){
+                if(sum1+piles[i]>sum2)
+                    return 1;
+                else
+                    return 0;
+            }
+            else{
+                if(sum1>piles[i]+sum2)
+                    return 1;
+                else
+                    return 0;
+            }
+        }
+        if(i>j && sum1>sum2)
+            return 1;
+        if(i>j)
+            return 0;
+        if(dp[i][j]!=-1)
+            return dp[i][j];
+            
+        if(flag==0)
+            dp[i][j] =  solve(i+1,j,piles,sum1+piles[i],sum2,1,dp) || solve(i,j-1,piles,sum1+piles[j],sum2,1,dp);
+        else
+            dp[i][j] =  solve(i+1,j,piles,sum1,sum2+piles[i],0,dp) || solve(i,j-1,piles,sum1,sum2+piles[j],0,dp);
+        return 1;
+    }
+    bool stoneGame(vector<int>& piles) {
+        int n = piles.size();
+        vector<vector<int>> dp(n,vector<int>(n,-1));
+        solve(0,n-1,piles,0,0,0,dp);
+        bool ans = 0;
+        for(auto i:dp){
+            for(auto j:i){
+                if(j!=-1)
+                    ans = ans|| j;
+            }
+        }
+        return ans;
+    }
+};
