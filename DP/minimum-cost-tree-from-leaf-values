@@ -1,0 +1,40 @@
+https://leetcode.com/problems/minimum-cost-tree-from-leaf-values/
+
+code:-
+class Solution {
+public:
+    // fro every rec we are returning a pair which consists max leaf node and sum
+    pair<int,int> solve(vector<int>& arr,int i,int j,vector<vector<pair<int,int>>> &dp){
+        // cout<<dp[i][j].first<<" "<<dp[i][j].second<<endl;
+        // int x[2];
+        if(i>j)
+        {
+            return {0,100000};
+        }
+        if(i==j)//here we are at a leaf node so we will return its value as maximum leaf node val and sum as zero
+        {
+            return {arr[i],0};
+        }
+        if(dp[i][j].first!=-1 && dp[i][j].second!=-1)
+            return dp[i][j];
+        pair<int,int> An;
+        An = {0,1000000};
+        for(int k=i;k<j;k++){
+            pair<int,int> left = solve(arr,i,k,dp);
+            pair<int,int> right = solve(arr,k+1,j,dp);
+            int total = (left.first*right.first)+(left.second+right.second);
+            if(total<An.second){
+                An.second = total;
+                An.first = max(left.first,right.first);
+            }
+        }
+        return dp[i][j] = An;
+        
+    }
+    int mctFromLeafValues(vector<int>& arr) {
+        int n = arr.size();
+        vector<vector<pair<int,int>>> A(n,vector<pair<int,int>>(n,{-1,-1}));
+        return solve(arr,0,n-1,A).second;
+        // return B[1];
+    }
+};
