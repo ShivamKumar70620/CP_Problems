@@ -1,6 +1,30 @@
 https://leetcode.com/problems/minimum-falling-path-sum/
 
 code:-
+[1]:- recursion solution gives TLE
+class Solution {
+public:
+    int x=0,y=0,z=0;
+    int solve(int i,int j,vector<vector<int>>& matrix,int n,int m){
+        // cout<<matrix[i][j]<<endl;
+        if(i>=n)
+            return 0;
+        if(j<0 || j>=n)
+            return 1000000;
+        
+        return matrix[i][j]+min(min(solve(i+1,j-1,matrix,n,m),solve(i+1,j,matrix,n,m)),solve(i+1,j+1,matrix,n,m));
+    }
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        int n = matrix.size(),m = matrix[0].size();
+        int x = INT_MAX;
+        for(int i=0;i<m;i++)
+            x = min(x,solve(0,i,matrix,n,m));
+        return x;
+    }
+};
+
+[2]:- using dp
+
 class Solution {
 public:
     int minFallingPathSum(vector<vector<int>>& matrix) {
