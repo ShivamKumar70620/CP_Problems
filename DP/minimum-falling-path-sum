@@ -1,0 +1,32 @@
+https://leetcode.com/problems/minimum-falling-path-sum/
+
+code:-
+class Solution {
+public:
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        int n = matrix.size(),m = matrix[0].size();
+        int x = INT_MAX;
+        vector<vector<int>> dp(n,vector<int>(m));
+        for(int i=n-2;i>=0;i--){
+            for(int j=0;j<m;j++){
+                int a=INT_MAX,b=INT_MAX,c=INT_MAX;
+                if(j-1>=0)
+                    a = matrix[i+1][j-1];
+                b = matrix[i+1][j];
+                if(j+1<n)
+                    c = matrix[i+1][j+1];
+                // cout<<a<<" "<<b<<" "<<c<<endl;
+                dp[i][j] = min(min(a,b),c)+matrix[i][j];
+                matrix[i][j] = dp[i][j];
+            }
+            
+        }
+        for(int i=0;i<m;i++){
+            cout<<dp[0][i]<<" ";
+            x = min(x,dp[0][i]);
+        }
+        if(n==1)
+            return matrix[0][0];
+        return x;
+    }
+};
