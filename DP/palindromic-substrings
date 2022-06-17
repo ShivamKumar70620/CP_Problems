@@ -1,0 +1,48 @@
+https://leetcode.com/problems/palindromic-substrings/submissions/
+
+code:-
+
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int n = s.size();
+        vector<vector<int>> v(n,vector<int>(n,0));
+        int sum = 0;
+        for(int i=0;i<n;i++){
+            v[i][i] = 1;
+            // sum+=1;
+        }
+        for(int i=0;i<n-1;i++)
+        {
+            if(s[i]==s[i+1]){
+                v[i][i+1] = 1;
+                // sum+=1;
+            }
+        }
+        if(n>2){
+            int k = 2;
+            int p = 0,i,j;
+            while(1){
+                i=0;
+                while(i<s.size()-2-p){
+                    j = i+k;
+
+                    if(s[i]==s[j] && v[i+1][j-1]==1)
+                        v[i][j] = 1;
+                    i+=1;
+                }
+                // cout<<i<<" "<<j<<endl;
+                if(i==1 && j==s.size()-1)
+                    break;
+                p+=1;
+                k+=1;
+            }
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++)
+               sum+=v[i][j];
+        }
+        return sum;
+        
+    }
+};
