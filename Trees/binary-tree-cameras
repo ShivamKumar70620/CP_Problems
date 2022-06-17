@@ -1,0 +1,39 @@
+https://www.youtube.com/watch?v=uoFrIIrp5_g
+https://leetcode.com/problems/binary-tree-cameras/
+
+
+code:-
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int camera = 0;
+    int cameras(TreeNode* root){
+        if(root==NULL)//if any node is null then then will say to its child node that they are covered;
+            return 1;
+        int l = cameras(root->left);
+        int r = cameras(root->right);
+        
+        if(l==-1 || r==-1)//if any of the node returns -1 then they are asking parent to get a camera
+        {
+            camera++;
+            return 0;
+        }
+        if(l==0 || r==0)//if any of the node returns 0 then they are saying to its parent that they have a camera;
+            return 1;
+        return -1;
+    }
+    int minCameraCover(TreeNode* root) {
+        if(cameras(root)==-1) camera++;//if the root is returning -1 then we need to get a camera for the root node;
+        return camera;
+    }
+};
