@@ -1,0 +1,29 @@
+
+https://leetcode.com/problems/beautiful-arrangement/submissions/
+
+code:-
+
+class Solution
+{
+public:
+    void solve(int i,int n,vector<bool> &vis,int &count){
+        if(i>n)
+            count++;
+        for(int j=1;j<=n;j++){
+            if(!vis[j] && (j%i==0 || i%j==0)){
+                vis[j] = 1;
+                solve(i+1,n,vis,count);
+                vis[j] = 0;
+            }
+        }
+        return;
+    }
+
+    int countArrangement(int n) {
+        vector<bool> vis(n+1,false);
+        int count = 0;
+        solve(1,n,vis,count);
+        return count;
+        
+    }
+};
