@@ -1,0 +1,27 @@
+https://leetcode.com/problems/minimum-path-cost-in-a-grid/
+
+code:-
+
+DP Solution
+
+class Solution {
+public:
+    int minPathCost(vector<vector<int>>& grid, vector<vector<int>>& moveCost) {
+        int n = grid.size(),m = grid[0].size();
+        vector<vector<int>> dp(n,vector<int>(m,0));
+        for(int i=n-2;i>=0;i--){
+            for(int j=0;j<m;j++){
+                int x = 1000000;
+                for(int k = 0;k<m;k++){
+                    x = min(x,moveCost[grid[i][j]][k]+dp[i+1][k]+grid[i+1][k]);
+                }
+                dp[i][j] = x;
+            }
+        }
+        int x = 1000000;
+        for(int i=0;i<m;i++){
+            x = min(x,dp[0][i]+grid[0][i]);
+        }
+        return x;
+    }
+};
