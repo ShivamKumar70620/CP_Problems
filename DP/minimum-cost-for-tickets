@@ -1,0 +1,53 @@
+https://leetcode.com/problems/minimum-cost-for-tickets/
+
+code:-
+
+[1]:- recursive solution does'nt pass all the test cases
+
+class Solution {
+public:
+    int ans = INT_MAX;
+    
+    int solve(int i,vector<int>& days,int n,int day,int cost,vector<int> costs,vector<int> dp){
+        // cout<<i<<" "<<day<<endl;
+        if(i>=n){
+            ans = min(ans,cost);
+            return cost;
+        }
+        if(dp[i]!=-1)
+            return dp[i];
+        if(days[i]>day){
+            solve(i+1,days,n,days[i],cost+costs[0],costs,dp);
+            solve(i+1,days,n,days[i]+6,cost+costs[1],costs,dp);
+            solve(i+1,days,n,days[i]+29,cost+costs[2],costs,dp);
+        }
+        else
+            solve(i+1,days,n,day,cost,costs,dp);
+        return dp[i] = ans;
+    }
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        vector<int> dp(days.size(),-1);
+        fill(dp.begin(),dp.end(),-1);
+        int x = solve(0,days,days.size(),0,0,costs,dp);
+        return x;
+    }
+};
+
+
+[2]:-  dp solution
+
+class Solution {
+public:
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        int n = days.size();
+        vector<int> dp(n+1,INT_MAX);
+        dp[n] = 0;
+        for(int i=n-1;i>=0;i--){
+            int d7 = i,d30=i;
+            while(d7<n && days[d7]<7+days[i]) d7++;
+            while(d30<n && days[d30]<30+days[i]) d30++;
+            dp[i] = min({costs[0]+dp[i+1],dp[d7]+costs[1],dp[d30]+costs[2]});
+        }
+        return dp[0];
+    }
+};
