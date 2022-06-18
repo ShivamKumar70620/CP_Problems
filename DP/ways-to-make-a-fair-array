@@ -1,0 +1,81 @@
+https://leetcode.com/problems/ways-to-make-a-fair-array/
+
+
+code:-
+
+[1]:- simple solution with tc of n^2 gives TLE;
+
+class Solution {
+public:
+    int waysToMakeFair(vector<int>& nums) {
+        int n = nums.size();
+        int count = 0;
+        int sum = accumulate(nums.begin(),nums.end(),0);
+        for(int i=0;i<n;i++){
+            if(sum%2==0){
+                if(nums[i]%2!=0)
+                    continue;
+            }
+            else{
+                if(nums[i]%2==0)
+                    continue;
+            }
+            int flag = 0;
+            int sum1 = 0,sum2 = 0;
+            for(int j=0;j<n;j++){
+                if(i==j)
+                    continue;
+                if(flag==0){
+                    sum1+=nums[j];
+                    flag = 1;
+                }
+                else{
+                    sum2+=nums[j];
+                    flag = 0;
+                }
+                        
+            }
+            if(sum1==sum2)
+                count+=1;
+        }
+        return count;                                           
+    }
+};
+
+
+[2]:- DP solution with TC of n
+
+class Solution {
+public:
+    int waysToMakeFair(vector<int>& nums) {
+        int n = nums.size();
+        vector<pair<int,int>> left(n),right(n);         
+        left[0] = {0,0};
+        for(int i=1;i<n;i++){
+            if(i%2==0){
+                left[i] = {left[i-1].first,nums[i-1]+left[i-1].second};
+            }
+            else{
+                left[i] = {left[i-1].first+nums[i-1],left[i-1].second};
+            }
+        }
+        right[n-1] = {0,0};
+        for(int i=n-2;i>=0;i--){
+            if(i%2==0){
+                right[i] = {right[i+1].first,nums[i+1]+right[i+1].second};
+            }
+            else{
+                right[i] = {right[i+1].first+nums[i+1],right[i+1].second};
+            }
+        }
+        int count = 0;
+        for(int i=0;i<n;i++){
+            if(left[i].first+right[i].second==left[i].second+right[i].first)
+                count+=1;
+        }
+        return count;
+    }
+};
+
+
+
