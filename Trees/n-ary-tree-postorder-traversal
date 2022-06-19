@@ -1,0 +1,23 @@
+https://leetcode.com/problems/n-ary-tree-postorder-traversal/
+
+
+code:-
+
+class Solution {
+public:
+    void posto(Node *curr,vector<int> &ans){
+        if(curr==NULL)
+            return;
+        for(auto i:curr->children)
+            posto(i,ans);
+        ans.push_back(curr->val);
+    }
+    vector<int> postorder(Node* root) {
+        vector<int> ans;
+        if(root==nullptr)
+            return ans;
+        posto(root,ans);
+        return ans;
+        
+    }
+};
