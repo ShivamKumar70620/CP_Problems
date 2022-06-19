@@ -1,0 +1,57 @@
+https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/
+
+code:-
+
+[1]:-  Recursive solution only passed some cases;
+
+class Solution {
+public:
+    int solve(int i,vector<int> &prices,int fee,int n,int B,int S,vector<int> dp){
+        // cout<<B<<" "<<i<<endl;
+        if(i>=n)
+            return 0;
+        if(dp[i]!=-1)
+            return dp[i];
+        int x;
+        if(B==-1){
+            x =  max(solve(i+1,prices,fee,n,i,-1,dp),solve(i+1,prices,fee,n,-1,-1,dp));
+        }
+        else{
+            x = max(solve(i+1,prices,fee,n,-1,-1,dp)+prices[i]-prices[B]-fee,solve(i+1,prices,fee,n,B,-1,dp));
+        }
+        return dp[i] = x;
+        
+    }
+    int maxProfit(vector<int>& prices, int fee) {
+        int n = prices.size();
+        int ans = 0;
+        vector<int> dp(n,-1);
+        return solve(0,prices,fee,n,-1,-1,dp);
+        // return ans;
+    }
+};
+
+
+[2]:-
+
+class Solution {
+public:
+
+    int maxProfit(vector<int>& prices, int fee) {
+        int n = prices.size();
+        int ans = 0;
+        int mn = prices[0];
+        for(int i=0;i<n;i++)
+        {
+         if (prices[i] < mn)
+                mn = prices[i];
+         if(prices[i] > mn + fee)
+         {
+              ans += prices[i] - fee - mn;
+              mn = prices[i] - fee;
+         }
+            
+        }
+           return ans;  
+    }
+};
