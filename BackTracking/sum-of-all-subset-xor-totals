@@ -1,0 +1,22 @@
+https://leetcode.com/problems/sum-of-all-subset-xor-totals/
+
+code:-
+
+class Solution {
+public:
+    void solve(int i,vector<int>&nums,int sum,int &ans,int n){
+        if(i>=n){
+            cout<<sum<<endl;
+            return;
+        }
+        solve(i+1,nums,sum^nums[i],ans,n);
+        solve(i+1,nums,sum,ans,n);
+        
+    }
+    int subsetXORSum(vector<int>& nums) {
+        vector<bool> flag(nums.size(),0);
+        int ans = 0;
+        solve(0,nums,0,ans,nums.size());
+        return ans;
+    }
+};
