@@ -1,0 +1,42 @@
+https://leetcode.com/problems/different-ways-to-add-parentheses/submissions/
+
+
+code:-
+
+class Solution {
+public:
+    
+    vector<int> solve(int i,int j,string exp){
+        // cout<<i<<" "<<j<<endl;
+        vector<int> res;
+        for(int k = i;k<=j;k++){
+            // cout<<exp[k]<<endl;
+            if(exp[k]=='*' || exp[k]=='-' || exp[k]=='+'){
+                vector<int> x = solve(i,k-1,exp);
+                vector<int> y = solve(k+1,j,exp);
+                for(auto left:x){
+                    // cout<<left<<endl;;
+                    for(auto right:y){
+                        // cout<<right<<" ";
+                        if(exp[k]=='*')
+                            res.push_back(left*right);
+                        else if(exp[k]=='-')
+                            res.push_back(left-right);
+                        else
+                            res.push_back(left+right);
+                    }
+                    // cout<<endl;
+                }
+            }
+        }
+        if(res.size()==0)
+            res.push_back(stoi(exp.substr(i,j+1)));
+        return res;
+        
+    }
+    vector<int> diffWaysToCompute(string exp) {
+        vector<int> v;
+        v = solve(0,exp.size()-1,exp);
+        return v;
+    }
+};
