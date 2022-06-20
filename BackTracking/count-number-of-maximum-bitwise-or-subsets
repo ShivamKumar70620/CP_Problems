@@ -1,0 +1,25 @@
+https://leetcode.com/problems/count-number-of-maximum-bitwise-or-subsets/
+
+code:-
+
+class Solution {
+public:
+    int ans = 0;
+    void solve(int i,int mxor,vector<int> &nums,int n,int k){
+        if(i>=n){
+            if(k==mxor)
+                ans+=1;
+            return ;
+        }
+        solve(i+1,mxor,nums,n,k|nums[i]);
+        solve(i+1,mxor,nums,n,k);
+    }
+    int countMaxOrSubsets(vector<int>& nums) {
+        int mxor = 0;
+        int n = nums.size();
+        for(int i=0;i<n;i++)
+            mxor = mxor| nums[i];
+        solve(0,mxor,nums,n,0);
+        return ans;
+    }
+};
