@@ -1,0 +1,69 @@
+https://leetcode.com/problems/short-encoding-of-words/
+
+code:-
+
+[1]:- gave TLE
+
+class Solution {
+public:
+    int minimumLengthEncoding(vector<string>& word) {
+        vector<string> words;
+        int ans = 0;
+        set<string> s1;
+        for(auto i:word)
+            s1.insert(i);
+        for(auto i:s1)
+            words.push_back(i);
+        int n = words.size();
+        // map<string ,int> mp;
+        for(int i=0;i<n;i++){
+            int flag = 0;
+            // string word1 = words[i];
+            for(int j=0;j<n;j++){
+                // string word2 = words[j];
+                if(i!=j && words[i].size()<=words[j].size()){
+                    if(words[i]==words[j].substr(words[j].size()-words[i].size(),words[i].size()))
+                        flag = 1;
+                }
+            }
+            if(flag==0)
+                ans+=words[i].size()+1;
+        }
+   
+        return ans;
+    }
+};
+
+
+[2]:- Passed
+
+class Solution {
+public:
+    int minimumLengthEncoding(vector<string>& word) {
+        vector<string> words;
+        int ans = 0;
+        set<string> s1;
+        for(auto i:word)
+            s1.insert(i);
+        map<string ,int> mp;
+        for(auto i:s1){
+            words.push_back(i);
+            mp[i] = 1;
+        }
+        int n = words.size();
+        
+        for(int i=0;i<n;i++){
+            if(mp[words[i]]==1){
+                for(int j=1;j<words[i].size();j++){
+                    if(mp.count(words[i].substr(j)))
+                        mp[words[i].substr(j)] = 0;
+                }
+            }
+        }
+        for(auto i:mp){
+            if(i.second==1)
+                ans+=(i.first).size()+1;
+        }
+        return ans;
+    }
+};
