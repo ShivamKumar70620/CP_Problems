@@ -1,0 +1,29 @@
+https://leetcode.com/problems/combination-sum-iii/
+
+code:-
+
+class Solution {
+public:
+    void solve(int i,vector<vector<int>> &res,vector<int> &ans,int k,int n){
+        // cout<<n<<endl;
+        if(n==0 && k==0){
+            res.push_back(ans);
+            return;
+        }
+        if(n<0 || k<0 || i>9)
+            return;
+        
+        ans.push_back(i);
+        solve(i+1,res,ans,k-1,n-i);
+        ans.pop_back();
+        solve(i+1,res,ans,k,n);
+        
+        
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> res;
+        vector<int> ans;
+        solve(1,res,ans,k,n);
+        return res;
+    }
+};
