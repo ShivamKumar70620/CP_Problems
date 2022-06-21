@@ -1,0 +1,44 @@
+https://leetcode.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/
+
+code:-
+
+class Solution {
+public:
+    vector<string> ans;
+    void solve(string temp,int k,int n){
+        if(n==0){
+            ans.push_back(temp);
+            return;
+        }
+        if(temp.size()==0){
+            solve(temp+'a',k,n-1);
+            solve(temp+'b',k,n-1);
+            solve(temp+'c',k,n-1);
+        }
+        else{
+            if(temp[temp.size()-1]=='a'){
+                solve(temp+'b',k,n-1);
+                solve(temp+'c',k,n-1);
+            }
+            else if(temp[temp.size()-1]=='b'){
+                solve(temp+'a',k,n-1);
+                solve(temp+'c',k,n-1);
+            }
+            else{
+                solve(temp+'a',k,n-1);
+                solve(temp+'b',k,n-1);
+            }
+        }
+    }
+    string getHappyString(int n, int k){
+        ans.clear();
+        solve("",k,n);
+        // for(auto i:ans){
+        //     cout<<i<<" ";
+        // }
+        // cout<<endl;
+        if(k>ans.size())
+            return "";
+        return ans[k-1];
+    }
+};
