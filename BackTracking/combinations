@@ -1,0 +1,58 @@
+https://leetcode.com/problems/combinations/
+
+
+code:-
+[1]:-
+
+class Solution {
+public:
+    void solve(int i,int n,int k,vector<vector<int>> &res,vector<int> temp){
+        if(temp.size()==k){
+            res.push_back(temp);
+        }
+        else{
+            for(int j=i;j<=n;j++){
+                temp.push_back(j);
+                solve(j+1,n,k,res,temp);
+                temp.pop_back();
+            }
+        }
+        
+    }
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int>> res;
+        vector<int> temp;
+        solve(1,n,k,res,temp);
+        return res;
+    }
+};
+
+[2]:-
+
+class Solution {
+public:
+    void solve(int i,int n,int k,vector<vector<int>> &ans,vector<int> temp,map<vector<int>,int> &mp){
+        if(i>n+1 || k<0)
+            return ;
+        if(k==0){
+            if(mp.find(temp)==mp.end()){
+                mp[temp] = 1;
+                ans.push_back(temp);
+            }
+            return;
+        }
+        solve(i+1,n,k,ans,temp,mp);
+        temp.push_back(i);
+        solve(i+1,n,k-1,ans,temp,mp);
+        temp.pop_back();
+        
+    }
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int>> res;
+        map<vector<int>,int> mp;
+        vector<int> temp;
+        for(int i=1;i<=n;i++)
+            solve(i,n,k,res,temp,mp);
+        return res;
+    }
+};
