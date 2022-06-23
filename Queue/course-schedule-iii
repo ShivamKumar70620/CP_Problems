@@ -1,0 +1,42 @@
+https://leetcode.com/problems//
+
+code:-
+
+
+class Solution {
+public:
+    static bool cmp(const pair<int,int>&a,const pair<int,int>&b){
+        return a.second<b.second;
+    }
+    
+    int scheduleCourse(vector<vector<int>>& courses) {
+        int n = courses.size();
+        vector<pair<int,int>> work;
+        for(int i=0;i<n;i++){
+            work.push_back({courses[i][0],courses[i][1]});
+        }
+        
+        sort(work.begin(),work.end(),cmp);
+        
+        int m = work.size();
+        priority_queue<int> pq;
+        int x = 0;
+        int j = 0;
+        
+        while(j<m){
+            if(x+work[j].first<=work[j].second){
+                pq.push(work[j].first);
+                x += work[j].first;
+            }
+            else if(pq.size() && pq.top()>work[j].first){
+                x += work[j].first - pq.top();
+                pq.pop();
+                pq.push(work[j].first);
+            }
+            // cout<<x<<endl;
+            j+=1;
+        }
+            
+        return pq.size();
+    }
+};
