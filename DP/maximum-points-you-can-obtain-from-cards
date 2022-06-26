@@ -1,0 +1,77 @@
+https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/
+
+code:-
+
+[1]:- simple recursion - TLE
+
+class Solution {
+public:
+    int solve(int i,int j,vector<int>&cardPoints,int k){
+        if(k<=0)
+            return 0;
+        return max(solve(i+1,j,cardPoints,k-1)+cardPoints[i],solve(i,j-1,cardPoints,k-1)+cardPoints[j]);
+    }
+    int maxScore(vector<int>& cardPoints, int k) {
+        return solve(0,cardPoints.size()-1,cardPoints,k);
+    }
+};
+
+[2] :- Recursion + memoization - MLE
+
+class Solution {
+public:
+    int solve(int i,int j,vector<int>&cardPoints,int k,vector<vector<int>>&dp){
+        if(k<=0)
+            return 0;
+        if(dp[i][j]!=-1)
+            return dp[i][j];
+        return dp[i][j] = max(solve(i+1,j,cardPoints,k-1,dp)+cardPoints[i],solve(i,j-1,cardPoints,k-1,dp)+cardPoints[j]);
+    }
+    int maxScore(vector<int>& cardPoints, int k) {
+        int n = cardPoints.size();
+        vector<vector<int>> dp(n,vector<int>(n,-1));
+        return solve(0,n-1,cardPoints,k,dp);
+    }
+};
+
+[3] :- Sliding window
+
+class Solution {
+public:
+    int maxScore(vector<int>& cardPoints, int k) {
+        int n = cardPoints.size();
+        vector<int> left(n,0),right(n,0);
+        int sum = 0;
+        left[0] = cardPoints[0];
+        for(int i=1;i<n;i++)
+            left[i] = left[i-1]+cardPoints[i];
+        right[n-1] = cardPoints[n-1];
+        for(int i=n-2;i>=0;i--)
+            right[i] = right[i+1]+cardPoints[i];
+        if(k==n)
+            return left[n-1];
+        int i=0,j=n-k-1;
+        // for(int i=0;i<n;i++)
+        // {
+        //     cout<<left[i]<<" ";
+        // }
+        // cout<<endl;
+        // for(int i=0;i<n;i++)
+        // {
+        //     cout<<right[i]<<" ";
+        // }
+        sum = 0;
+        while(j<n){
+            if(i==0)
+                sum = max(sum,right[j+1]);
+            else if(j==n-1)
+                sum = max(sum,left[i-1]);
+            else
+                sum = max(sum,right[j+1]+left[i-1]);
+            i++;
+            j++;
+        }
+        return sum;
+    }
+};
+
