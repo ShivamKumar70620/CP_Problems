@@ -1,0 +1,35 @@
+https://leetcode.com/problems/minimum-moves-to-equal-array-elements/
+code:-
+
+class Solution {
+public:
+    int minMoves(vector<int>& nums) {
+        int sum = 0;
+        int n = nums.size();
+        int mn = INT_MAX;
+        for(auto i:nums){
+            sum+=i;
+            mn = min(i,mn);
+        }
+        return sum-(mn*n);
+        
+    }
+};
+
+https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/
+code:-
+
+class Solution {
+public:
+    int minMoves2(vector<int>& nums) {
+        int n= nums.size();
+        sort(nums.begin(),nums.end());
+        int x = nums[n/2];        
+        // cout<<x<<endl;
+        int sum = 0;
+        for(auto i:nums){
+            sum+=abs(x-i);
+        }
+        return sum;
+    }
+};
