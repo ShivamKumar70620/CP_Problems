@@ -1,0 +1,25 @@
+https://leetcode.com/problems/diameter-of-binary-tree/
+
+
+code:-
+
+
+class Solution {
+public:
+    int height(TreeNode* root){
+        if(root==NULL)
+            return 0;
+        return 1+max(height(root->left),height(root->right));
+    }
+    int diameterOfBinaryTree(TreeNode* root) {
+        if(root==NULL)
+            return 0;
+        int x = 0,y = 0;
+        if(root->left!=NULL)
+            x = height(root->left);
+        if(root->right!=NULL)
+            y = height(root->right);
+        // cout<<x<<" "<<y<<endl;
+        return max({x+y,diameterOfBinaryTree(root->left),diameterOfBinaryTree(root->right)});
+    }
+};
