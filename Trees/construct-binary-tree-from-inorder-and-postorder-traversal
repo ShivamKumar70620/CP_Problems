@@ -1,0 +1,35 @@
+https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
+
+
+code:-
+
+class Solution {
+public:
+    map<int,int> mp;
+    
+    TreeNode* construct(int i,int j,int &post, vector<int>& postorder){
+        if(i>j)
+            return NULL;
+        // cout<<post<<endl;
+        TreeNode* node = new TreeNode(postorder[post]);
+        --post;
+        if(i==j)
+            return node;
+        int k = mp[node->val];
+        // cout<<i<<" "<<k<<" "<<j<<endl;
+//         We first made the right subtree because in postorder sequence of elements is in LRN form.
+        node->right = construct(k+1,j,post,postorder);
+        node->left = construct(i,k-1,post,postorder);
+        
+        return node;
+    }
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        int n = inorder.size();
+        int post = n-1;
+        mp.clear();
+        for(int i=0;i<n;i++)
+            mp[inorder[i]] = i;
+        return construct(0,n-1,post,postorder);
+        
+    }
+};
