@@ -1,0 +1,25 @@
+https://leetcode.com/problems/sum-of-left-leaves/
+
+code:-
+
+
+class Solution {
+public:
+    bool leaf(TreeNode* root){
+        if(root==NULL)
+            return 0;
+        if(root->left==NULL && root->right==NULL)
+            return 1;
+        return 0;
+    }
+    int sumOfLeftLeaves(TreeNode* root) {
+        if(root==NULL)
+            return 0;
+        if(leaf(root->left))
+            return root->left->val+sumOfLeftLeaves(root->right);
+        else{
+            return sumOfLeftLeaves(root->left)+sumOfLeftLeaves(root->right);
+        }
+        return 0;
+    }
+};
