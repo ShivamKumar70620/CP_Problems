@@ -1,0 +1,38 @@
+https://practice.geeksforgeeks.org/problems/construct-tree-1/1
+
+code:-
+
+
+class Solution{
+    public:
+    
+    map<int,int> mp;
+    
+    Node* construct(int i,int j,int &pre, int preorder[]){
+        if(i>j)
+            return NULL;
+        // cout<<post<<endl;
+        Node* node = new Node(preorder[pre]);
+        ++pre;
+        if(i==j)
+            return node;
+        int k = mp[node->data];
+        // cout<<i<<" "<<k<<" "<<j<<endl;
+    //         We first made the left subtree because in preorder sequence of elements is in NLR form.
+        node->left = construct(i,k-1,pre,preorder);
+        node->right = construct(k+1,j,pre,preorder);
+        
+        
+        return node;
+    }
+    Node* buildTree(int inorder[], int preorder[],int n) {
+        // int n = inorder.size();
+        int pre = 0;
+        mp.clear();
+        for(int i=0;i<n;i++)
+            mp[inorder[i]] = i;
+        return construct(0,n-1,pre,preorder);
+        
+    }
+
+};
