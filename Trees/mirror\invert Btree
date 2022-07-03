@@ -1,0 +1,16 @@
+code:-
+
+class Solution {
+public:
+    void mirror(TreeNode* root){
+        if(root==NULL)
+            return;
+        mirror(root->left);
+        mirror(root->right);
+        swap(root->left,root->right);
+    }
+    TreeNode* invertTree(TreeNode* root) {
+        mirror(root);
+        return root;
+    }
+};
