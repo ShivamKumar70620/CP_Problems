@@ -1,0 +1,31 @@
+https://leetcode.com/problems//
+
+code:-
+
+class Solution {
+public:
+    int height(TreeNode* root){
+        if(root==NULL)
+            return 0;
+        return 1+max(height(root->left),height(root->right));
+    }
+    int s = 0;
+    void sum(TreeNode* root,int mx){
+        
+        if(root==NULL)
+            return ;
+        if(mx==1)
+        {
+            s+=root->val;
+            return ;
+        }
+        sum(root->right,mx-1);
+        sum(root->left,mx-1);
+            
+    }
+    int deepestLeavesSum(TreeNode* root) {
+        int mx = height(root);
+        sum(root,mx);
+        return s;
+    }
+};
