@@ -1,0 +1,21 @@
+https://leetcode.com/problems/convert-bst-to-greater-tree/
+https://practice.geeksforgeeks.org/problems/bst-to-greater-sum-tree/1/
+
+code:-
+
+class Solution {
+public:
+    int sum = 0;
+    void traverse(TreeNode* root){
+        if(root==NULL)
+            return;
+        traverse(root->right);
+        sum+=root->val;
+        root->val = sum;
+        traverse(root->left);
+    }
+    TreeNode* convertBST(TreeNode* root) {
+        traverse(root);
+        return root;
+    }
+};
