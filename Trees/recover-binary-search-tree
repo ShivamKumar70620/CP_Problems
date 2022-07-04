@@ -1,0 +1,70 @@
+https://leetcode.com/problems/recover-binary-search-tree/
+
+code:-
+[1]:- My approach
+class Solution {
+public:
+    void inOrder(TreeNode* root,int &i,vector<int> &v){
+        if(root==NULL)
+            return;
+        inOrder(root->left,i,v);
+        root->val = v[i++];
+        inOrder(root->right,i,v);
+    }
+    void inorder(TreeNode* root,vector<int> &v){
+        if(root==NULL)
+            return;
+        inorder(root->left,v);
+        v.push_back(root->val);
+        inorder(root->right,v);
+    }
+    void recoverTree(TreeNode* root) {
+        vector<int> v;
+        inorder(root,v);
+        sort(v.begin(),v.end());
+        int i = 0;
+        inOrder(root,i,v);
+        return;
+    }
+};
+
+[2]:-
+
+class Solution {
+public:
+    
+    void solve(TreeNode* root,TreeNode** first,TreeNode** middle,TreeNode** last,TreeNode** prev){
+        if(root==NULL)
+            return;
+        solve(root->left,first,middle,last,prev);
+        if(*prev && root->val<(*prev)->val)
+        {
+            if(!*first){
+                *first = *prev;
+                *middle = root;
+            }
+            else
+                *last = root;
+        }
+        *prev = root;
+        solve(root->right,first,middle,last,prev);
+    }
+    void recoverTree(TreeNode* root) {
+        if(root==NULL)
+            return;
+        TreeNode* first,*middle,*last,*prev;
+        first = middle = last = prev = NULL;
+        solve(root,&first,&middle,&last,&prev);
+        if(first && last){
+            int temp = first->val;
+            first->val = last->val;
+            last->val = temp;
+        }
+        else if(first && middle){
+            int temp = first->val;
+            first->val = middle->val;
+            middle->val = temp;
+        }
+        return;
+    }
+};
