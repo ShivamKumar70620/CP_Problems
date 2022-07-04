@@ -1,0 +1,33 @@
+https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/
+code:-
+
+class Solution {
+public:
+    int count = 0;
+    int noOfNodes(TreeNode* root){
+        if(root==NULL)
+            return 0;
+        if(root->left==NULL && root->right==NULL)
+            return 1;
+        return 1+noOfNodes(root->left)+noOfNodes(root->right);
+    }
+    int average(TreeNode* root){
+        if(root==NULL){
+            return 0;
+        }
+        int left = average(root->left);
+        int right = average(root->right);
+        // cout<<left<<" "<<right<<endl;
+        int nodes = noOfNodes(root);
+        int sum = left+right+root->val;
+        // cout<<sum<<" "<<nodes<<endl;
+        if((sum)/(nodes)==root->val)
+            count+=1;
+        return sum;
+        
+    }
+    int averageOfSubtree(TreeNode* root) {
+        average(root);
+        return count;
+    }
+};
