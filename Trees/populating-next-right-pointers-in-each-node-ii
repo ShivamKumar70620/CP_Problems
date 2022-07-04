@@ -1,0 +1,31 @@
+https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/
+https://practice.geeksforgeeks.org/problems/connect-nodes-at-same-level/1
+
+
+code:-
+
+class Solution {
+public:
+    void solve(Node* root,int h,map<int,Node*> &mp){
+        if(root==NULL)
+            return ;
+        // cout<<h<<" "<<root->val<<endl;
+        if(mp.find(h)!=mp.end()){
+            // cout<<"yes"<<endl;
+            root->next = mp[h];
+            mp[h] = root;
+            
+        }
+        else{
+            root->next = NULL;
+            mp[h] = root;
+        }
+        solve(root->right,h+1,mp);
+        solve(root->left,h+1,mp);
+    }
+    Node* connect(Node* root) {
+        map<int,Node*> mp;
+        solve(root,0,mp);
+        return root;
+    }
+};
