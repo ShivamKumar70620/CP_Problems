@@ -1,0 +1,32 @@
+https://leetcode.com/problems/candy/
+https://www.hackerrank.com/challenges/candies/problem
+
+code:-
+
+class Solution {
+public:
+    int candy(vector<int>& ratings) {
+        int n = ratings.size();
+        int A[n];
+        fill(A,A+n,0);
+        // A[0] = 1;
+        for(int i=1;i<n;i++){
+            if(ratings[i]>ratings[i-1]){
+                A[i] = A[i-1]+1;
+            }
+                
+        }
+        int B[n];
+        fill(B,B+n,0);
+        for(int i=n-2;i>=0;i--){
+            if(ratings[i]>ratings[i+1])
+                B[i] = B[i+1]+1;
+            
+                
+        }
+        int sum = 0;
+        for(int i=0;i<n;i++)
+            sum+=max(A[i],B[i])+1;
+        return sum;
+    }
+};
