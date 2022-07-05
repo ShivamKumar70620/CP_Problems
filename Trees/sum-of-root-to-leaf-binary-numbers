@@ -1,0 +1,24 @@
+https://leetcode.com/problems/sum-of-root-to-leaf-binary-numbers/
+
+code:-
+
+class Solution {
+public:
+    // int sum = 0;
+    int inorder(TreeNode* root,int sum){
+        if(root==NULL)
+            return 0;
+        // cout<<sum<<' '<<x<<' '<<root->val<<endl;
+        sum = 2*sum + root->val;
+        if(root->left==NULL && root->right==NULL)
+            return sum;
+        return inorder(root->left,sum)+inorder(root->right,sum);
+        
+        
+    }
+    int sumRootToLeaf(TreeNode* root) {
+        int sum = 0;
+        return inorder(root,sum);
+        // return sum;
+    }
+};
