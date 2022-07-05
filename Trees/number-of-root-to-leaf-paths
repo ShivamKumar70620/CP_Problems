@@ -1,0 +1,26 @@
+https://practice.geeksforgeeks.org/problems/number-of-root-to-leaf-paths/1/#
+https://leetcode.com/problems/binary-tree-paths/
+
+code:-
+
+map<int,int> mp;
+void solve(Node* root,int nodes){
+    if(root==NULL)
+        return;
+    
+    solve(root->left,nodes+1);
+    if(nodes!=1 && root->left==NULL && root->right==NULL)
+        mp[nodes]+=1;
+    solve(root->right,nodes+1);
+}
+void pathCounts(Node *root)
+{
+    if(root==NULL)
+        return;
+    if(root->left==NULL && root->right==NULL)
+        cout<<1<<" "<<1<<' $';
+    mp.clear();
+    solve(root,1);
+    for(auto i:mp)
+        cout<<i.first<<" "<<i.second<<" $";
+}
