@@ -1,0 +1,19 @@
+https://leetcode.com/problems/path-sum-iii/
+
+code:-
+
+class Solution {
+public:
+    int solve(TreeNode* root,long long int sum){
+        if(root==NULL)
+            return 0;
+        if(sum==root->val)
+            return 1+solve(root->left,sum-root->val)+solve(root->right,sum-root->val);
+        return solve(root->left,sum-root->val)+solve(root->right,sum-root->val);
+    }
+    int pathSum(TreeNode* root, int sum) {
+        if(root==NULL)
+            return 0;
+        return solve(root,sum)+pathSum(root->left,sum)+pathSum(root->right,sum);
+    }
+};
