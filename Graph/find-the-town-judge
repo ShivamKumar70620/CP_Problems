@@ -1,0 +1,23 @@
+https://leetcode.com/problems/find-the-town-judge/
+
+code:-
+
+class Solution {
+public:
+    int findJudge(int n, vector<vector<int>>& trust) {
+        if(n==1)
+            return 1;
+        map<int,int> mp;
+        for(auto i:trust){
+            mp[i[0]] = -1;
+            if(mp[i[1]]!=-1)
+                mp[i[1]]+=1;
+        }
+        for(auto i:mp)
+        {
+            if(i.second==n-1)
+                return i.first;
+        }
+        return -1;
+    }
+};
