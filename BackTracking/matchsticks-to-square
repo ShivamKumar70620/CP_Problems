@@ -1,0 +1,34 @@
+https://leetcode.com/problems/matchsticks-to-square/
+
+code:-
+
+class Solution {
+public:
+    bool backtrack(int i,int A[],vector<int>&match,int n,int side){
+        if(i>=n)
+            return 1;
+        for(int j=0;j<4;j++){
+            if(A[j]+match[i]<=side){
+                A[j]+=match[i];
+                if(backtrack(i+1,A,match,n,side))
+                    return 1;
+                A[j]-=match[i];
+            }
+        }
+        return 0;
+    }
+    bool makesquare(vector<int>& match) {
+        int A[4];
+        fill(A,A+4,0);
+        int sum=0,n = match.size();
+        for(int i=0;i<n;i++){
+            sum+=match[i];
+        }
+        sort(match.begin(),match.end(),greater<>());
+        int side = sum/4;
+        if(sum%4!=0)
+            return 0;
+        return backtrack(0,A,match,n,side);
+        
+    }
+};
