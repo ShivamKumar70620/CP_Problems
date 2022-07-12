@@ -1,0 +1,80 @@
+code:-
+
+[1] - My approach
+
+class Solution {
+public:
+    int count=INT_MAX;
+    void dfs(int i,int last,vector<int> adj[],int steps,bool vis[]){
+        if(i==last){
+            count = min(steps,count);
+            return;
+        }
+        vis[i]=1;
+        for(auto j:adj[i]){
+            if(!vis[j])
+                dfs(j,last,adj,steps+1,vis);
+        }
+        vis[i] = 0;
+    }
+    int minJumps(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> adj[n];
+        for(int i=0;i<n;i++){
+            if(i!=0)
+                adj[i].push_back(i-1);
+            if(i!=n-1)
+                adj[i].push_back(i+1);
+            for(int j=i+1;j<n;j++)
+                if(arr[i]==arr[j] && j!=i+1)
+                    adj[i].push_back(j);
+            
+        }
+        bool vis[n];
+        fill(vis,vis+n,false);
+        dfs(0,n-1,adj,0,vis);
+        return count; 
+    }
+};
+
+[2]:- BFS approach
+
+class Solution {
+public:
+    
+    int minJumps(vector<int>& arr) {
+        int n = arr.size();
+        unordered_map<int,vector<int>> adj;
+        for(int i=0;i<n;i++){
+            adj[arr[i]].push_back(i);
+            
+        }
+        bool vis[n];
+        fill(vis,vis+n,false);
+        vis[0] = 1;
+        queue<int> q;
+        q.push(0);
+        int step = 0;
+        while(!q.empty()){
+            for(int size = q.size();size>0;--size){
+                int i = q.front();
+                q.pop();
+                if(i==n-1)
+                    return step;
+                vector<int> &next = adj[arr[i]];
+                next.push_back(i-1);
+                next.push_back(i+1);
+                for(auto j:next){
+                    if(j>=0 && j<n && !vis[j])
+                    {
+                        vis[j] = 1;
+                        q.push(j);
+                    }
+                }
+                adj[arr[i]].clear();
+            }
+            step++;
+        }
+        return 0;
+    }
+};
