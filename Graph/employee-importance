@@ -1,0 +1,32 @@
+https://leetcode.com/problems/employee-importance/
+
+code:-
+
+/*
+// Definition for Employee.
+class Employee {
+public:
+    int id;
+    int importance;
+    vector<int> subordinates;
+};
+*/
+
+class Solution {
+public:
+    // int sum = 0;
+    int getImportance(vector<Employee*> employees, int id) {
+        // return solve(id,employees);
+        int sum = 0;
+        int val;
+        for(auto employee:employees){
+            if(employee->id==id){
+                for(auto j:employee->subordinates){
+                    sum+=getImportance(employees,j);
+                }
+                val = employee->importance;
+            }
+        }
+        return sum+val;;
+    }
+};
