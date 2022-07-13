@@ -59,3 +59,42 @@ public:
         
     }
 };
+
+[2] - solved using BFS
+
+class Solution {
+public:
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int n = grid.size();
+        if(grid[0][0]==1)
+            return -1;
+        if(grid[0][0]==0 && n==1)
+            return 1;
+        bool vis[n][n];
+        for(int i=0;i<n;i++)
+            fill(vis[i],vis[i]+n,false);
+        vis[0][0] = 1;
+        queue<pair<pair<int,int>,int>> q;
+        q.push({{0,0},1}); //where {0,0} is starting index and 1 is length of path;
+        while(!q.empty()){
+            pair<int,int> p = q.front().first;
+            int i = p.first;
+            int j = p.second;
+            int l = q.front().second;
+            q.pop();
+            vector<pair<int,int>> dir = {{0,1},{1,0},{-1,0},{0,-1},{1,1},{1,-1},{-1,1},{-1,-1}};
+            for(auto neighbour:dir){
+                int newi = neighbour.first+i;
+                int newj = neighbour.second+j;
+                if(newi>=0 && newj>=0 && newi<n && newj<n && grid[newi][newj]==0 && !vis[newi][newj]){
+                    vis[newi][newj] = true;
+                    q.push({{newi,newj},l+1});
+                    if(newi==n-1 && newj==n-1)
+                        return l+1;
+                }
+            }
+        }
+        return -1;
+        
+    }
+};
