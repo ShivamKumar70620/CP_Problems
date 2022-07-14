@@ -1,0 +1,56 @@
+https://leetcode.com/problems/partition-labels/
+
+code:-
+class Solution {
+public:
+    static bool cmp(pair<int,int> a,pair<int,int> b){
+        return a.first<b.first;
+        // return a.second<b.second;
+    }
+    vector<int> partitionLabels(string s) {
+        vector<int> v;
+        // map<int,map<char<int>>mp;
+        vector<pair<int,int>> index(26,{-1,-1}),temp;
+        for(int i=0;i<s.size();i++){
+            if(index[s[i]-'a'].first==-1){
+                index[s[i]-'a'].first = i;
+            }
+            else
+                index[s[i]-'a'].second = i;
+        }
+        
+        // int mn = index[0].first,mx = index[0].second;
+        for(auto i:index){
+            if(i.first==-1 && i.second==-1)
+                continue;
+            else if(i.second==-1)
+                temp.push_back({i.first,i.first});
+            else
+                temp.push_back(i);       
+        }
+        
+        
+        sort(temp.begin(),temp.end(),cmp);
+        // for(auto i:temp)
+        //     cout<<i.first<<' '<<i.second<<endl;
+        int mn = temp[0].first,mx=temp[0].second;
+        // int count = 0;
+        int i = 1;
+        while(i<temp.size()){
+            if(temp[i].first>mx){
+                v.push_back(mx-mn+1);
+                mn = temp[i].first,mx = temp[i].second;
+            }
+            else{
+                if(temp[i].first<mn)
+                    mn = temp[i].first;
+                if(temp[i].second>mx)
+                    mx = temp[i].second;
+            }
+            i++;
+            
+        }
+        v.push_back(mx-mn+1);
+        return v;
+    }
+};
