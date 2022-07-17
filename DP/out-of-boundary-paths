@@ -1,0 +1,28 @@
+https://leetcode.com/problems/out-of-boundary-paths/
+code:-
+class Solution {
+public:
+    
+    long long mod = 1000000007;
+    long long solve(int i,int j,int rows,int cols,int n,vector<vector<vector<long long>>> &dp){
+        if(n<0)
+            return 0;
+        if(i==rows || j==cols || i==-1 || j==-1)
+            return 1;
+        if(dp[i][j][n]!=-1)
+            return dp[i][j][n];
+        long long total = 0;
+        long long u = solve(i-1,j,rows,cols,n-1,dp);
+        long long d = solve(i+1,j,rows,cols,n-1,dp);
+        long long l = solve(i,j-1,rows,cols,n-1,dp);
+        long long r = solve(i,j+1,rows,cols,n-1,dp);
+        total = (u+d+l+r)%mod;
+        dp[i][j][n] = total;
+        return total;
+        
+    }
+    int findPaths(int m, int n, int maxMove, int str, int stc) {
+        vector<vector<vector<long long>>> dp(m+1,vector<vector<long long>>(n+1,vector<long long>(maxMove+1,-1)));
+        return solve(str,stc,m,n,maxMove,dp);
+    }
+};
