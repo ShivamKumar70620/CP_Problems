@@ -1,0 +1,32 @@
+https://leetcode.com/problems/longest-repeating-character-replacement/
+
+code:-
+
+class Solution {
+public:
+    
+    int characterReplacement(string s, int k) {
+        int A[26];
+        fill(A,A+26,0);
+        int n = s.size();
+        int ans = 0;
+        int l = 0,r = 0;
+        int mx = 0;
+        while(r<n)
+        {
+            A[int(s[r])-65]+=1;
+            mx = max(mx,A[int(s[r])-65]);
+            if((r-l+1)-mx>k){
+                A[int(s[l]-65)]-=1;
+                l++;
+            }
+            ans = max(ans,r-l+1);
+            r++;
+            
+            
+        }
+       
+        return ans;
+        
+    }
+};
