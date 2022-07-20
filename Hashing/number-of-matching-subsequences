@@ -1,0 +1,35 @@
+https://leetcode.com/problems/number-of-matching-subsequences/
+
+code:-
+
+class Solution {
+public:
+    
+    int numMatchingSubseq(string s, vector<string>& words) {
+        int n = s.size();
+        map<char,vector<string>> mp;
+        for(auto i:s){
+            vector<string> v;
+            mp[i] = v;
+        }
+        for(auto i:words)
+        {
+            if(mp.find(i[0])!=mp.end())
+                mp[i[0]].push_back(i);
+        }
+        int count = 0;
+        for(auto i:s){
+            vector<string> q = mp[i];
+            mp[i] = {};
+            // cout<<q.size()<<endl;
+            for(auto j:q){
+                string st = j;
+                if(st.size()==1)
+                    count+=1;
+                else
+                    mp[st[1]].push_back(st.substr(1));
+            }
+        }
+        return count;
+    }
+};
