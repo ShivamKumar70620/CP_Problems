@@ -1,0 +1,19 @@
+code:-
+
+class Solution{
+  public:	
+    int mod = 1000000007;
+	int distinctSubsequences(string s)
+	{
+	    vector<int> last(256,-1);
+	    int n = s.size();
+	    long long int dp[n+1];
+	    dp[0] = 1;
+	    for(int i=1;i<=n;i++){
+	        dp[i] = (int)(1LL*2*dp[i-1])%mod;
+            if(last[s[i-1]] != -1) dp[i] = ((dp[i] + mod) - (int)(dp[last[s[i-1]]])%mod)%mod;
+            last[s[i-1]] = (i-1);
+	    }
+	    return (dp[n]);
+	}
+};
