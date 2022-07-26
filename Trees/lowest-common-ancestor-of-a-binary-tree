@@ -1,0 +1,59 @@
+https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+
+code:-
+
+[1]:- my approach - accepted
+
+class Solution {
+public:
+    bool a,b;
+    bool search(TreeNode* root,TreeNode* p,TreeNode* q){
+        if(a && b){
+            // cout<<"Yes"<<endl;
+            return 1;
+        }
+        if(root==NULL)
+            return 0;
+        if(root==p){
+            a = true;
+        }
+        else if(root==q){
+            b = true;
+        }
+        return search(root->left,p,q) || search(root->right,p,q);
+        
+    }
+    TreeNode* ans=NULL;
+    void inorder(TreeNode* root,TreeNode* p,TreeNode* q){
+        if(root==NULL)
+            return;
+        a=false,b=false;
+        if(search(root,p,q)){
+            cout<<root->val<<" ";
+            ans = root;
+        }
+        inorder(root->left,p,q);
+        inorder(root->right,p,q);
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        inorder(root,p,q);
+        return ans;
+    }
+};
+
+[2] - optimmized one
+
+class Solution {
+public:
+    
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root==NULL)
+            return NULL;
+        if(root==p || root==q)
+            return root;
+        TreeNode* leftlca = lowestCommonAncestor(root->left,p,q);
+        TreeNode* rightlca = lowestCommonAncestor(root->right,p,q);
+        if(leftlca && rightlca) return root;
+        return (leftlca!=NULL)?leftlca:rightlca;
+    }
+};
