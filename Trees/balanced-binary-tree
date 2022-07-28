@@ -1,0 +1,24 @@
+https://leetcode.com/problems/balanced-binary-tree/
+
+code:-
+
+class Solution {
+public:
+    bool ans = 1;
+    int solve(TreeNode* root){
+        if(root==NULL)
+            return 0;
+        int l = solve(root->left)+1;
+        int r = solve(root->right)+1;
+        if(abs(l-r)>1)
+            ans = ans && 0;
+        return max(l,r);
+            
+    }
+    bool isBalanced(TreeNode* root) {
+        if(root==NULL)
+            return 1;
+        cout<<solve(root);
+        return ans;
+    }
+};
