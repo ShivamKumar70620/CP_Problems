@@ -1,0 +1,41 @@
+https://leetcode.com/problems/word-subsets/
+
+code:-
+
+class Solution {
+public:
+    vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {
+        vector<string> temp;
+        int A[26] = {0},B[26] = {0};
+        int cmax = 0;
+        for(auto i:words2){
+            for(auto j:i)
+                A[int(j)-97]+=1;
+            for(int j=0;j<26;j++){
+                int d = A[j] - B[j];
+                if(d>0)
+                {
+                    cmax+=d;
+                    B[j]+=d;
+                }
+            }
+            if(cmax>10)
+                return temp;
+            fill(A,A+26,0);
+            
+        }
+        for(auto i:words1){
+            int j;
+            for(auto j:i)
+                A[int(j)-97]++;
+            for(j=0;j<26;j++){
+                if(A[j]<B[j])
+                    break;
+            }
+            if(j==26)
+                temp.push_back(i);
+            fill(A,A+26,0);
+        }
+        return temp;
+    }
+};
