@@ -1,0 +1,28 @@
+https://leetcode.com/problems/flood-fill/
+
+code:- BFS approach
+
+class Solution {
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        queue<pair<int,int>> q;
+        q.push({sr,sc});
+        while(!q.empty()){
+            int i = q.front().first;
+            int j = q.front().second;
+            // cout<<i<<" "<<j<<endl;
+            q.pop();
+            vector<int> v[4] = {{-1,0},{0,-1},{1,0},{0,1}};
+            for(auto k:v){
+                int newi = i+k[0],newj = j+k[1];
+                if(newi>=0 && newi<image.size() && newj>=0 && newj<image[0].size() && image[newi][newj]==image[i][j] && image[newi][newj]!=color){
+                    q.push({newi,newj});
+                    // image[newi][newj] = color;
+                    
+                }
+            }
+            image[i][j] = color;
+        }
+        return image;
+    }
+};
