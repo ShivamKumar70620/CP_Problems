@@ -1,0 +1,37 @@
+https://leetcode.com/problems/number-of-operations-to-make-network-connected/
+
+code:-
+
+[1]:- my approach - I just simply finds all the disconnected components and returns the edges needs to connect them.
+
+class Solution {
+public:
+    void solve(int src,int n,vector<int> adj[],vector<bool> &vis){
+        vis[src] = 1;
+        for(auto i:adj[src]){
+            if(!vis[i]){
+                solve(i,n,adj,vis);
+            }
+        }
+    }
+    int makeConnected(int n, vector<vector<int>>& con) {
+        if(con.size()<n-1)
+            return -1;
+        vector<bool> vis(n,0);
+        vector<int> adj[n];
+        for(auto i:con)
+        {
+            adj[i[0]].push_back(i[1]);
+            adj[i[1]].push_back(i[0]);
+        }
+        int c = 0;
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+                c+=1;
+                solve(i,n,adj,vis);
+            }
+        }
+        return c-1;
+        // solve(0,n,adj,vis);
+    }
+};
