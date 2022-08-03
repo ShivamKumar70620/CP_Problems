@@ -1,0 +1,43 @@
+https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/
+
+code:-
+
+class Solution{
+public:
+    //Function that constructs BST from its preorder traversal.
+    Node* post_order(int pre[], int size)
+    {
+        Node* ans = (Node *)malloc( sizeof( Node ) );
+        ans->data = pre[0];
+        ans->left = ans->right = NULL;
+        for(int i=1;i<size;i++){
+            int t = pre[0];
+            Node* temp = ans;
+            while(1){
+                if(pre[i]<t && temp->left!=NULL){
+                    temp = temp->left;
+                    t = temp->data;
+                }
+                else if(pre[i]<t && temp->left==NULL){
+                    Node* x = (Node *)malloc( sizeof( Node ) );
+                    x->data = pre[i];
+                    x->left = x->right = NULL;
+                    temp->left = x;
+                    break;
+                }
+                else if(pre[i]>t && temp->right!=NULL){
+                    temp = temp->right;
+                    t = temp->data;
+                }
+                else{
+                    Node* x = (Node *)malloc( sizeof( Node ) );
+                    x->data = pre[i];
+                    x->left = x->right = NULL;
+                    temp->right = x;
+                    break;
+                }
+            }
+        }
+        return ans;
+    }
+};
