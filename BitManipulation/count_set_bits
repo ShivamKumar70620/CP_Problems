@@ -17,3 +17,23 @@ public:
         return v;
     }
 };
+
+[2]:- efficiant
+
+class Solution{
+    public:
+    // n: input to count the number of set bits
+    //Function to return sum of count of set bits in the integers from 1 to n.
+    int bits(int n){
+        if(n<=1) return n;
+      int k=floor(log2(n));
+      return (k)*pow(2, k-1)+(n-pow(2, k)+1)+bits(n-pow(2, k));
+    }
+    int countSetBits(int n)
+    {
+        
+        // cout<<k<<" "<<count<<endl;
+        
+        return bits(n);
+    }
+};
