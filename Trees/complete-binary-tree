@@ -1,0 +1,86 @@
+https://practice.geeksforgeeks.org/problems/complete-binary-tree/1
+
+code:-
+
+[1] my approach using level traversal
+
+class Solution{
+public:    
+    
+    bool isCompleteBT(Node* root){
+        vector<int> v;
+        stack<Node*> s;
+        int h = 0;
+        map<int,vector<int>> mp;
+        map<Node*,int> D;
+        while(1){
+            if(s.empty() && !root){
+                mp[h].push_back(-1);
+                break;
+            }
+                
+            if(!root)
+            {
+                mp[h].push_back(-1);
+                root = s.top();
+                h = D[root];
+                s.pop();
+                root = root->right;
+                h+=1;
+            }
+            else{
+                mp[h].push_back(root->data);
+                D[root] = h;
+                h+=1;
+                s.push(root);
+                root = root->left;
+            }
+        }
+        int flag = 0;
+        for(auto i:mp){
+            // cout<<i.first<<" : ";
+            for(auto j:i.second)
+            {
+                // cout<<j<<" ";
+                if(flag && j>=0)
+                    return 0;
+                if(j==-1)
+                    flag = 1;
+            }
+            // if(flag==1)
+            //     flag = 1;
+            // cout<<endl;
+        }
+        return 1;
+    }
+};
+
+
+[2]:-
+
+class Solution{
+public:    
+    
+    bool isCompleteBT(Node* root){
+        if(!root)
+            return 1;
+        queue<Node*> q;
+        q.push(root);
+        bool f = 0;
+        while(!q.empty()){
+            Node* temp = q.front();
+            q.pop();
+            if(!temp){
+                f = 1;
+            }
+            else{
+                if(f)
+                    return 0;
+                q.push(temp->left);
+                q.push(temp->right);
+            }
+        }
+        
+        return 1;
+    }
+};
