@@ -1,0 +1,93 @@
+https://leetcode.com/problems/longest-increasing-subsequence/
+
+code:-
+
+[1]:- recursive
+
+class Solution {
+public:
+    vector<int> temp;
+    int solve(int i,vector<int> nums,int n,int val){
+        if(i>=n){
+            
+            return 0;
+        }
+        if(nums[i]>val){
+            // temp.push_back(nums[i]);
+            int a = 1+solve(i+1,nums,n,nums[i]);
+            // temp.pop_back();
+            int b = solve(i+1,nums,n,val);
+            return max(a,b);
+        }
+        else
+            return solve(i+1,nums,n,val);
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> v(n,0);
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            temp.clear();
+            if(n-i>ans)
+                ans = max(ans,1+solve(i+1,nums,n,nums[i]));
+        }
+        return ans;
+    }
+};
+
+
+[2]:- recursion + memoization
+
+class Solution {
+public:
+    vector<int> temp;
+    int solve(int i,vector<int> nums,int n,int val,vector<vector<int>> &dp){
+        if(i>=n){
+            return 0;
+        }
+        if(dp[i][val+1]!=-1)
+            return dp[i][val+1];
+        int len1 = solve(i+1,nums,n,val,dp);
+        int len = INT_MIN;
+        if(val==-1 || nums[i]>nums[val]){
+            len = 1+solve(i+1,nums,n,i,dp);
+            
+        }
+        return dp[i][val+1] = max(len,len1);
+        
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
+        return solve(0,nums,n,-1,dp);
+    }
+};
+
+[3] - DP
+
+class Solution {
+public:
+    
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 0) {
+            return 0;
+        }
+
+        int dp[n];
+        fill(dp,dp+n,0);
+        dp[0] = 1;
+        for(int i=1;i<n;i++){
+            for(int j=0;j<i;j++){
+                if(nums[j]<nums[i] && dp[i]<dp[j])
+                    dp[i] = dp[j];
+            }
+            dp[i]++;
+        }
+        int mx = INT_MIN;
+        for(auto i:dp)
+            mx = max(mx,i);
+        return mx;
+    }
+};
+
