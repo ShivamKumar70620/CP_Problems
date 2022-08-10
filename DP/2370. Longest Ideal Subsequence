@@ -1,0 +1,26 @@
+
+
+code:-
+
+class Solution {
+public:
+    int longestIdealString(string s, int k) {
+        vector<int> v(26,0);
+        for(int i=0;i<s.size();i++){
+            int x = int(s[i])-97;
+            int j = x-k<0?0:x-k;
+            int j1 = x+k>25?25:x+k;
+            // cout<<j<<" "<<j1<<endl;
+            for(int l=j;l<=j1;l++){
+                // cout<<l<<" ";
+                v[x] = max(v[x],v[l]);
+                
+            }
+            v[x]++;
+        }
+        int ans = 0;
+        for(int i=0;i<26;i++)
+            ans = max(ans,v[i]);
+        return ans;
+    }
+};
