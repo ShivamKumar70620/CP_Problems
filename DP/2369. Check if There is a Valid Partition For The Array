@@ -1,0 +1,48 @@
+
+
+code:-
+
+class Solution {
+public:
+    
+    bool validPartition(vector<int>& nums) {
+        int n = nums.size();
+        bool vis[n];
+        vis[0] = 0;
+        if(nums[0]==nums[1])
+            vis[1] = 1;
+        else
+            vis[1] = 0;
+        for(int i=2;i<n;i++){
+            if(nums[i]==nums[i-1]){
+                if(nums[i-1]==nums[i-2])
+                    vis[i] = 1;
+                else
+                    vis[i] = vis[i-2];
+                }
+            else{
+                if(nums[i]-1==nums[i-1] && nums[i-1]-1==nums[i-2]){
+                    if(i==2)
+                        vis[i] = 1;
+                    else
+                        vis[i] = vis[i-3];
+                }
+                else
+                    vis[i] = 0;
+            }
+        }
+        int c = 0;
+        for(int i=0;i<n;i++)
+        {
+            if(vis[i]){
+                if(c>=3)
+                    return 0;
+                c = 0;
+            }
+            else
+                c+=1;
+        }
+        return 1 && vis[n-1];
+            
+    }
+};
