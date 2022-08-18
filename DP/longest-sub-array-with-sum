@@ -1,0 +1,45 @@
+https://practice.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1
+
+code:-
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<int> A(n,0);
+        A[0] = nums[0];
+        for(int i=1;i<n;i++){
+            A[i] += (A[i-1]+nums[i]);
+        }
+        for(auto i:A)
+            cout<<i<<' ';
+        cout<<endl;
+        int i = -1,j = 0;
+        int ans = 0;
+        while(j<n){
+            if(i<0 ){
+                if(A[j]==k){
+                    ans +=1;
+                    j++;
+                }
+                else if(A[j]<k)
+                    j++;
+                else
+                    i++;
+            }
+            else{
+                if(A[j]-A[i]<k){
+                    j++;
+                }
+                else if(A[j]-A[i]==k){
+                    ans +=1;
+                    j++;
+                }
+                else
+                    i++;
+            }
+        }
+        return ans;
+            
+    }
+};
