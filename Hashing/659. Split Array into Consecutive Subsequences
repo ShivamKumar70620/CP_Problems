@@ -1,0 +1,31 @@
+https://leetcode.com/problems/split-array-into-consecutive-subsequences/submissions/
+code:-
+
+class Solution {
+public:
+    bool isPossible(vector<int>& nums) {
+        unordered_map<int,int> vm,am;
+        for(auto i:nums){
+            am[i]+=1;
+        }
+        for(auto i:nums){
+            if(am[i]<=0)
+                continue;
+            else if(vm[i]>0){
+                am[i]-=1;
+                vm[i]-=1;
+                vm[i+1]+=1;
+            }
+            else if(am[i]>0 && am[i+1]>0 && am[i+2]>0){
+                am[i]-=1;
+                am[i+1]-=1;
+                am[i+2]-=1;
+                vm[i+3]+=1;
+            }
+            else
+                return 0;
+        }
+        return 1;
+        
+    }
+};
