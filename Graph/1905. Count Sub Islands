@@ -1,0 +1,41 @@
+https://leetcode.com/problems/count-sub-islands/
+
+code:-
+
+class Solution {
+public:
+    
+    bool solve(int i,int j,vector<vector<int>> &grid1,vector<vector<int>> &grid2){
+        int n = grid2.size(),m = grid2[0].size();
+        if(i<0 || j<0 || i==n || j==m || grid2[i][j]==0)
+            return 1;
+        if(grid1[i][j]==0)
+            return 0;
+        grid2[i][j] = 0;
+        bool a = solve(i,j+1,grid1,grid2);
+        bool b = solve(i,j-1,grid1,grid2);
+        bool c = solve(i-1,j,grid1,grid2);
+        bool d = solve(i+1,j,grid1,grid2);
+        return a && b && c && d;
+        
+    }
+    int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
+        int n = grid2.size(),m = grid2[0].size();
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid2[i][j]==1){
+                    bool check = solve(i,j,grid1,grid2);
+                    if(check)
+                        ans+=1;
+                    // cout<<ans<<endl;
+                }
+                // cout<<grid2[i][j]<<" ";;
+            }
+            // cout<<endl;
+        }
+        
+        return ans;
+        
+    }
+};
